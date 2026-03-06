@@ -95,8 +95,8 @@ def run(
     # Hour = zero-padded hour string
     df["Hour"] = df["Start_Time"].dt.strftime("%H")
 
-    # EOM = last day of month of Start_Time
-    df["EOM"] = df["Start_Time"] + pd.offsets.MonthEnd(0)
+    # EOM = last day of month of Start_Time (normalized to midnight)
+    df["EOM"] = (df["Start_Time"] + pd.offsets.MonthEnd(0)).dt.normalize()
 
     # EOPM = end of previous month (day before first of current month)
     df["EOPM"] = df["Start_Time"].dt.to_period("M").dt.to_timestamp() - pd.Timedelta(days=1)
