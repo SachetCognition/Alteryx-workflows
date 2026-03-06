@@ -43,6 +43,10 @@ def join_filtered(
     Returns:
         Joined DataFrame with rows present in both datasets.
     """
+    # Copy to avoid mutating caller's DataFrames
+    df_enriched = df_enriched.copy()
+    df_filtered = df_filtered.copy()
+
     # Ensure datetime types for join key
     for frame in [df_enriched, df_filtered]:
         if not pd.api.types.is_datetime64_any_dtype(frame["Start_Time"]):

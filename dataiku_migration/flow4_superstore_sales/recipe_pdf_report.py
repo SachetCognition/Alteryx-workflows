@@ -125,10 +125,11 @@ def generate_bar_chart_image(df: pd.DataFrame) -> str:
         b64 = base64.b64encode(img_bytes).decode("utf-8")
         return f"data:image/png;base64,{b64}"
     except Exception:
-        # kaleido not available; embed chart as SVG fallback
+        # kaleido not available; try SVG fallback
         try:
             svg_str = fig.to_image(format="svg").decode("utf-8")
-            return ""  # Skip if SVG also fails
+            b64_svg = base64.b64encode(svg_str.encode("utf-8")).decode("utf-8")
+            return f"data:image/svg+xml;base64,{b64_svg}"
         except Exception:
             return ""
 
