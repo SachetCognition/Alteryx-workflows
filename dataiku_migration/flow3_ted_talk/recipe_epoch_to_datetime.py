@@ -44,7 +44,7 @@ def epoch_to_datetime(df: pd.DataFrame) -> pd.DataFrame:
     # Convert film_date from Unix epoch seconds to datetime
     # Mirrors: DateTimeAdd("1970-01-01", ToNumber([film_date]), 'second')
     df["film_date"] = pd.to_datetime(
-        df["film_date"].astype(int), unit="s", errors="coerce"
+        pd.to_numeric(df["film_date"], errors="coerce"), unit="s", errors="coerce"
     )
 
     # Derive Year (as integer, matching Alteryx DateTimeYear output)
